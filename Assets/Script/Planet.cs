@@ -85,9 +85,9 @@ public class Planet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag=="Planatoid") {
-            Destroy(gameObject);
+        if (col.gameObject.tag == "Planet") {
+            Destroy(col.gameObject);
+            print("test");
         }
-
     }
 }
