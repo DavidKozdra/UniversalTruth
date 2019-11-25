@@ -23,15 +23,16 @@ public class Player : MonoBehaviour
 
         if (Planet.Selected)
         {
-            print("Defined");
-            NameText.text = P.Name;
-             InfoText.text = P.Reasource.ToString();
-            Display.SetActive(true);
-            P = null;
+            if (P != null) {
+                NameText.text = P.Name;
+                InfoText.text = P.Reasource.ToString();
+                Display.SetActive(true);
+                P = null;
+            }
         }
         else {
             Display.SetActive(false);
-
+            P = null;
         }
     }
     // Update is called once per frame
@@ -73,8 +74,6 @@ public class Player : MonoBehaviour
         {
             pos.x -= Speed * Time.deltaTime;
         }
-
-        CheckDistance();
         transform.position = pos;
     }
 
