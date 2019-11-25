@@ -1112,8 +1112,7 @@ MonoBehaviour:
   YRange: 100
   XRange: 30
   SpawnedMax: 10
-  Spawnables:
-  - {fileID: 1414843619}
+  Spawnables: []
   Buffer: 0
 --- !u!4 &858002980
 Transform:
