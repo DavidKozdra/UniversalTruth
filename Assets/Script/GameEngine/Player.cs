@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Text Money,AddText,NameText,InfoText;
     public Planet P;
     public GameObject Display;
+    public List<GameObject> OwnedPlanets = new List<GameObject>();
     // Use this for initialization
     void Start()
     {

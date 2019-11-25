@@ -14,6 +14,7 @@ public class Event
 
 }
 
+
 public class Planet : MonoBehaviour
 {
 
@@ -39,7 +40,19 @@ public class Planet : MonoBehaviour
         if (Reasource == 0) {
             Reasource = rand(1, 200);
         }
+        if (Owned) {
+            Buy();
+        }
     }
+
+    public void Buy()
+    {
+
+        p.OwnedPlanets.Add(gameObject);
+        Owned = true;
+
+    }
+
 
     // Update is called once per frame
     void Update()
