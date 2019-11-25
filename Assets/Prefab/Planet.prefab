@@ -149,9 +149,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Medal: {fileID: 1930606256341976}
   Highlight: {fileID: 1966746921977856}
+  ButtonTemplate: {fileID: 4456611283765409952, guid: 401c16c6487108343a5e30baec0072c3,
+    type: 3}
   Name: GIA
   Reasource: 100
-  Events: []
+  Events:
+  - Description: James
+    Cost: 0
+    Icon: {fileID: 0}
   Owned: 1
 --- !u!114 &114440824174109244
 MonoBehaviour:

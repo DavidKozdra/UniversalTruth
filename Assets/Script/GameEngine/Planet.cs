@@ -10,7 +10,7 @@ public class Event
 
     public string Description;
     public int Cost;
-    public Sprite Icon;
+    public Image Icon;
 
 }
 
@@ -18,7 +18,7 @@ public class Event
 public class Planet : MonoBehaviour
 {
 
-    public GameObject Medal, Highlight;
+    public GameObject Medal, Highlight,ButtonTemplate;
     public string Name;
     public int Reasource;
     [SerializeField] Event[] Events;
@@ -34,6 +34,14 @@ public class Planet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        foreach (Event e in Events)
+        {
+            GameObject button = Instantiate(ButtonTemplate) as GameObject;
+            button.SetActive(true);
+            button.GetComponent<ButtonType>().Display.text = e.Description;
+            button.GetComponent<ButtonType>().I = e.Icon;
+            button.transform.SetParent(ButtonTemplate.transform.parent, false);
+        }
         //Display = GameObject.Find("PDis");
         //NameText = GameObject.Find("Name").GetComponent<Text>(); 
         //InfoText = GameObject.Find("Info").GetComponent<Text>(); 
@@ -58,10 +66,7 @@ public class Planet : MonoBehaviour
     void Update()
     {
 
-        foreach (Event e in Events)
-        {
 
-        }
 
         if (Reasource <= 0) {
             //Died
