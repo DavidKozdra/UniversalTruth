@@ -11,15 +11,17 @@ public class Orbit : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        float dist = Vector3.Distance(Sun.gameObject.transform.position, transform.position);
-        if (dist >= 100)
-        {
-           // find new sun some how
-        }
-        if (dist <= 2)
-        {
-            Destroy(gameObject);
-            //  Sun = null;
+        if (Sun !=null) {
+            float dist = Vector3.Distance(Sun.gameObject.transform.position, transform.position);
+            if (dist >= 100)
+            {
+                // find new sun some how
+            }
+            if (dist <= 2)
+            {
+                Destroy(gameObject);
+                //  Sun = null;
+            }
         }
     }
 	
