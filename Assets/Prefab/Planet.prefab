@@ -157,7 +157,7 @@ MonoBehaviour:
   - Description: James
     Cost: 0
     Icon: {fileID: 0}
-  Owned: 1
+  Owned: 0
 --- !u!114 &114440824174109244
 MonoBehaviour:
   m_ObjectHideFlags: 0
