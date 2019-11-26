@@ -19,12 +19,17 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool stop=false;
         if (SpawnedMax!=0) {
-            if (Count >= SpawnedMax) {
-                Destroy(gameObject);
+            if (Count >= SpawnedMax)
+            {
+                stop = true;
+            }
+            else {
+                stop =false;
             }
         }
-        if (Buffer <= 0)
+        if (Buffer <= 0 && !stop)
         {
                 Count++;
 

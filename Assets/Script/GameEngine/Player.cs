@@ -25,11 +25,9 @@ public class Player : MonoBehaviour
         if (Planet.Selected)
         {
             if (P != null) {
-                Display.SetActive(true);
             }
         }
         else {
-            Display.SetActive(false);
             P = null;
         }
     }

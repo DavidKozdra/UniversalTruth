@@ -12,7 +12,6 @@ public class SUN : Planet
         {
             Buy();
         }
-        sun = true;
     }
 
     public void Buy()

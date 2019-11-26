@@ -22,7 +22,8 @@ public class Planet : MonoBehaviour
     public GameObject Medal, Highlight,Display, BuyDisplay, MineB, EnslaveB, TradeB, HarvestB, MainDisplay,Dyson;
     public string Name;
     public int Reasource, Life;
-    public bool Owned,sun;
+    public bool Owned,renew;
+    public string[] Names = { "Gia " , "Gazorpazorp", "Alphabetrium", "Vogsphere ", "Cybertron ", "Dagobah ", "Dirt","Vegetable" };
     public int Cost;
     public static bool Selected;
     public Player p => FindObjectOfType<Player>();
@@ -36,6 +37,9 @@ public class Planet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
+            Name = Names[rand(0,Names.Length)];
+        
         p.P = null;
         // BuyDisplay = GameObject.Find("Buy");
         //MainDisplay = GameObject.Find("MainDisplay");
@@ -107,11 +111,12 @@ public class Planet : MonoBehaviour
     }
     public void BuyMine()
     {
-        if (Reasource >= 50)
+        if (Reasource >= 50 && p.Currency >=25)
         {
             if (p.P!= null) {
                 p.P = gameObject.GetComponent<Planet>();
                 p.P.Reasource -= 50;
+                p.Currency -= 25;
                 p.EarningRate += 2;
                 p.AddText.gameObject.SetActive(true);
                 p.AddText.text = "-" + 50;
@@ -119,8 +124,23 @@ public class Planet : MonoBehaviour
             else { print( " am null"); }
         }
         CalculateButtons();
+
     }
-  
+    public void Renew()
+    {
+        if (Reasource >= 100 && p.Currency >=100)
+        {
+            if (p.P != null)
+            {
+                p.P = gameObject.GetComponent<Planet>();
+                p.Currency -= 100;
+                p.AddText.gameObject.SetActive(true);
+                p.AddText.text = "-" + 100;
+            }
+            else { print(" am null"); }
+        }
+        CalculateButtons();
+    }
     public void CalculateMass()
     {
         int mass = Reasource - 90;
@@ -146,9 +166,12 @@ public class Planet : MonoBehaviour
         if (Cost== 0) {
             Cost = Reasource / 2 + rand(0,50);
         }
-        if (p.Timer <= 0 && Life >= 2)
+        if (p.Timer <= .1f)
         {
-            Life++;
+            if (Life >= 2) {
+                Life++;
+                print("add life");
+            }
         }
         CalculateMass();
 
@@ -167,23 +190,28 @@ public class Planet : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // if mouise is over ui
+        // on UI elements 
         if (!Selected)
         {
-            if (p.P!=null) {
-                p.P.Display.SetActive(false);
-            }
+            Display.SetActive(!Display.activeSelf);
             p.P = gameObject.GetComponent<Planet>();
-            CalculateButtons();
-            Display.SetActive(true);
             Selected = true;
         }
-        else
-        {
-            if (p.P = gameObject.GetComponent<Planet>()) {
-                Display.SetActive(false);
+        else {
+            if (p.P == gameObject.GetComponent<Planet>())
+            {
                 Selected = false;
                 p.P = null;
+                Display.SetActive(false);
+            }
+            else if(p.P != gameObject.GetComponent<Planet>()) {
+                if (p.P !=null) {
+                    p.P.Display.SetActive(false);
+                } 
+                print("Different");
+                Selected = false;
+                p.P = gameObject.GetComponent<Planet>();
+                p.P.Display.SetActive(true);
             }
         }
     }
