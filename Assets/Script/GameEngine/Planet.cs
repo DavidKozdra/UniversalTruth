@@ -70,6 +70,10 @@ public class Planet : MonoBehaviour
             CalculateButtons();
             MainDisplay.SetActive(true);
         }
+        else {
+            p.AddText.gameObject.SetActive(true);
+            p.AddText.text = "Not enough Money";
+        }
         CalculateButtons();
     }
 
