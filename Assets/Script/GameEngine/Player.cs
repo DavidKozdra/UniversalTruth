@@ -9,14 +9,14 @@ public class Player : MonoBehaviour
 
     public int Currency, EarningRate;
     public float Timer = 20f, AddTimer=4f, Speed = 5f;
-    public Text Money,AddText,NameText,InfoText;
-    public Planet P;
+    public Text Money,AddText;
+    public Planet P=null;
     public GameObject Display;
     public List<GameObject> OwnedPlanets = new List<GameObject>();
     // Use this for initialization
     void Start()
     {
-
+        P = null;
     }
 
 
@@ -25,10 +25,7 @@ public class Player : MonoBehaviour
         if (Planet.Selected)
         {
             if (P != null) {
-                NameText.text = P.Name;
-                InfoText.text = P.Reasource.ToString();
                 Display.SetActive(true);
-                P = null;
             }
         }
         else {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 [Serializable]
@@ -18,15 +19,14 @@ public class Event
 public class Planet : MonoBehaviour
 {
 
-    public GameObject Medal, Highlight,BuyDisplay,MineB,Enslave,Trade,Harvest, MainDisplay;
+    public GameObject Medal, Highlight,Display, BuyDisplay, MineB, EnslaveB, TradeB, HarvestB, MainDisplay,Dyson;
     public string Name;
-    public int Reasource,Life;
-    [SerializeField] List<Event> Events = new List<Event>();
-    public bool Owned;
+    public int Reasource, Life;
+    public bool Owned,sun;
     public int Cost;
     public static bool Selected;
     public Player p => FindObjectOfType<Player>();
-    public Text Costtext;
+    public Text Costtext, Resouces,NameText;
 
     int rand(int Min, int Max)
     {
@@ -36,86 +36,158 @@ public class Planet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-        foreach (Event e in Events)
-        {
-
-        }
-
-        //Display = GameObject.Find("PDis");
+        p.P = null;
+        // BuyDisplay = GameObject.Find("Buy");
+        //MainDisplay = GameObject.Find("MainDisplay");
         //NameText = GameObject.Find("Name").GetComponent<Text>(); 
         //InfoText = GameObject.Find("Info").GetComponent<Text>(); 
         if (Reasource == 0)
         {
             Reasource = rand(1, 200);
-            Life = rand(0,rand(0,200));
+            Life = rand(0, rand(0, 200));
         }
         if (Owned)
         {
-            Buy();
+            Medal.SetActive(Owned);
+            BuyDisplay.SetActive(false);
         }
     }
 
     public void Buy()
     {
-        if (p.Currency>= Cost) {
+        if (p.Currency >= Cost)
+        {
             p.Currency -= Cost;
             p.AddText.gameObject.SetActive(true);
             p.AddText.text = "-" + Cost;
-            Medal.SetActive(Owned);
             p.OwnedPlanets.Add(gameObject);
+            BuyDisplay.SetActive(false);
             Owned = true;
+            CalculateButtons();
+            MainDisplay.SetActive(true);
         }
-
-    }
-    public void Mine() {
-        if (Reasource>=50) {
-            MineB.SetActive(true);
-            Reasource -= 50;
-        }
-
+        CalculateButtons();
     }
 
-    public void CalculateMass(){
+    public void CalculateButtons()
+    {
+
+        if (Owned)
+        {
+            if (p.P != null)
+            {
+                if (gameObject.name == p.P.name)
+                {
+                    MineB.SetActive(true);
+                    HarvestB.SetActive(true);
+                    EnslaveB.SetActive(true);
+
+                }
+            }
+            else {
+                MineB.SetActive(false);
+                HarvestB.SetActive(false);
+                EnslaveB.SetActive(false);
+            }
+        }
+ 
+    }
+    public void Enslave()
+    {
+        if (Life >= 1)
+        {
+            if (p.P != null)
+            {
+                p.P.Life -= 1;
+                p.EarningRate += 2;
+               
+            }
+        }
+        CalculateButtons();
+    }
+    public void BuyMine()
+    {
+        if (Reasource >= 50)
+        {
+            if (p.P!= null) {
+                p.P = gameObject.GetComponent<Planet>();
+                p.P.Reasource -= 50;
+                p.EarningRate += 2;
+                p.AddText.gameObject.SetActive(true);
+                p.AddText.text = "-" + 50;
+            }
+            else { print( " am null"); }
+        }
+        CalculateButtons();
+    }
+  
+    public void CalculateMass()
+    {
         int mass = Reasource - 90;
-        if (transform.localScale.x <= (mass)/2)
+        if (transform.localScale.x <= (mass) / 2)
         {
             if (transform.localScale.x <= 11)
             {
                 transform.localScale += new Vector3(.1f, .1f, 0);
             }
         }
+        else if (transform.localScale.x >= (mass) / 2)
+        {
+            if (transform.localScale.x >= 3)
+            {
+                transform.localScale -= new Vector3(.1f, .1f, 0);
+            }
+        }
+
     }
     // Update is called once per frame
     void Update()
     {
-        if (p.Timer<=0&&Life>=2) {
+        if (Cost== 0) {
+            Cost = Reasource / 2 + rand(0,50);
+        }
+        if (p.Timer <= 0 && Life >= 2)
+        {
             Life++;
         }
         CalculateMass();
-        MainDisplay.SetActive(!BuyDisplay.activeSelf);
 
-        if (Reasource <= 0) {
+
+        if (Reasource <= 0)
+        {
             //Died
+            Destroy(gameObject);
             print("Die");
         }
+        Costtext.text = "Cost:" + Cost; 
         Medal.SetActive(Owned);
-
+        Resouces.text = "Reasoces:" + Reasource + " Life forms " + Life;
+        NameText.text = Name;
     }
 
     private void OnMouseDown()
     {
-     
+        // if mouise is over ui
         if (!Selected)
         {
+            if (p.P!=null) {
+                p.P.Display.SetActive(false);
+            }
             p.P = gameObject.GetComponent<Planet>();
+            CalculateButtons();
+            Display.SetActive(true);
             Selected = true;
         }
-        else {
-            Selected = false;
-            p.P = null;
+        else
+        {
+            if (p.P = gameObject.GetComponent<Planet>()) {
+                Display.SetActive(false);
+                Selected = false;
+                p.P = null;
+            }
         }
     }
+
 
     void OnMouseOver()
     {
@@ -130,7 +202,8 @@ public class Planet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Planet") {
+        if (col.gameObject.tag == "Planet")
+        {
             Destroy(col.gameObject);
             print("test");
         }

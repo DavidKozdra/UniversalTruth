@@ -118,7 +118,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300008, guid: 412109385214f5341a33fc017eb35f0a,
+      type: 3}
     m_PressedSprite: {fileID: 21300008, guid: 412109385214f5341a33fc017eb35f0a, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
@@ -157,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Display: {fileID: 6206491317928293252}
+  I: {fileID: 0}
 --- !u!1 &5959263038680143775
 GameObject:
   m_ObjectHideFlags: 0
