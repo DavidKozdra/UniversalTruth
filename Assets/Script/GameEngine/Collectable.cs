@@ -23,7 +23,7 @@ public class Collectable : MonoBehaviour {
             player.Currency += value;
             Destroy(gameObject);
         }
-        else if(col.gameObject.tag == "Planet")
+        else if(col.gameObject.tag == "Planet" || col.gameObject.tag == "Sun")
         {
           Planet p=  col.gameObject.GetComponent<Planet>();
           p.Reasource += 10;

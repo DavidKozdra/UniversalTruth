@@ -37,8 +37,13 @@ public class Planet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-            Name = Names[rand(0,Names.Length)];
+        int r = rand(1,3);
+        if (r == 2)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(rand(0, 150), rand(0, 10), 0, 1);
+        }
+        
+        Name = Names[rand(0,Names.Length)];
         
         p.P = null;
         // BuyDisplay = GameObject.Find("Buy");
@@ -111,6 +116,11 @@ public class Planet : MonoBehaviour
                
             }
         }
+        else
+        {
+            p.AddText.gameObject.SetActive(true);
+            p.AddText.text = "Not enough beings";
+        }
         CalculateButtons();
     }
     public void BuyMine()
@@ -126,6 +136,11 @@ public class Planet : MonoBehaviour
                 p.AddText.text = "-" + 50;
             }
             else { print( " am null"); }
+        }
+        else
+        {
+            p.AddText.gameObject.SetActive(true);
+            p.AddText.text = "Not enough ";
         }
         CalculateButtons();
 
