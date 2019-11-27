@@ -19,15 +19,15 @@ public class Event
 public class Planet : MonoBehaviour
 {
 
-    public GameObject Medal, Highlight,Display, BuyDisplay, MineB, EnslaveB, TradeB, HarvestB, MainDisplay,Dyson;
+    public GameObject Medal, Highlight, Display, BuyDisplay, MineB, EnslaveB, TradeB, HarvestB, MainDisplay, Dyson;
     public string Name;
     public int Reasource, Life;
-    public bool Owned,renew;
-    public string[] Names = { "Gia " , "Gazorpazorp", "Alphabetrium", "Vogsphere ", "Cybertron ", "Dagobah ", "Dirt","Vegetable" };
+    public bool Owned, renew;
+    public string[] Names = { "Gia ", "Gazorpazorp", "Alphabetrium", "Vogsphere ", "Cybertron ", "Dagobah ", "Dirt", "Vegetable" };
     public int Cost;
     public static bool Selected;
     public Player p => FindObjectOfType<Player>();
-    public Text Costtext, Resouces,NameText;
+    public Text Costtext, Resouces, NameText;
 
     int rand(int Min, int Max)
     {
@@ -37,14 +37,14 @@ public class Planet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        int r = rand(1,3);
+        int r = rand(1, 3);
         if (r == 2)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(rand(0, 150), rand(0, 10), 0, 1);
         }
-        
-        Name = Names[rand(0,Names.Length)];
-        
+
+        Name = Names[rand(0, Names.Length)];
+        name = Name;
         p.P = null;
         // BuyDisplay = GameObject.Find("Buy");
         //MainDisplay = GameObject.Find("MainDisplay");
@@ -75,7 +75,8 @@ public class Planet : MonoBehaviour
             CalculateButtons();
             MainDisplay.SetActive(true);
         }
-        else {
+        else
+        {
             p.AddText.gameObject.SetActive(true);
             p.AddText.text = "Not enough Money";
         }
@@ -97,13 +98,17 @@ public class Planet : MonoBehaviour
 
                 }
             }
-            else {
-                MineB.SetActive(false);
-                HarvestB.SetActive(false);
-                EnslaveB.SetActive(false);
+            else
+            {
+                if (Display.activeSelf) {
+                    p.P = gameObject.GetComponent<Planet>();
+                    MineB.SetActive(false);
+                    HarvestB.SetActive(false);
+                    EnslaveB.SetActive(false);
+                }
             }
         }
- 
+
     }
     public void Enslave()
     {
@@ -113,7 +118,7 @@ public class Planet : MonoBehaviour
             {
                 p.P.Life -= 1;
                 p.EarningRate += 2;
-               
+
             }
         }
         else
@@ -125,9 +130,10 @@ public class Planet : MonoBehaviour
     }
     public void BuyMine()
     {
-        if (Reasource >= 50 && p.Currency >=25)
+        if (Reasource >= 50 && p.Currency >= 25)
         {
-            if (p.P!= null) {
+            if (p.P != null)
+            {
                 p.P = gameObject.GetComponent<Planet>();
                 p.P.Reasource -= 50;
                 p.Currency -= 25;
@@ -135,7 +141,7 @@ public class Planet : MonoBehaviour
                 p.AddText.gameObject.SetActive(true);
                 p.AddText.text = "-" + 50;
             }
-            else { print( " am null"); }
+            else { print(" am null"); }
         }
         else
         {
@@ -147,16 +153,20 @@ public class Planet : MonoBehaviour
     }
     public void Renew()
     {
-        if (Reasource >= 100 && p.Currency >=100)
+        if ( p.Currency >= 100)
         {
             if (p.P != null)
             {
-                p.P = gameObject.GetComponent<Planet>();
                 p.Currency -= 100;
                 p.AddText.gameObject.SetActive(true);
                 p.AddText.text = "-" + 100;
             }
-            else { print(" am null"); }
+            else { print(" am null");
+                p.P = gameObject.GetComponent<Planet>();
+            }
+        }
+        else {
+            p.AddText.text = "Not enough Currency";
         }
         CalculateButtons();
     }
@@ -182,26 +192,32 @@ public class Planet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Cost== 0) {
-            Cost = Reasource / 2 + rand(0,50);
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Selected = false;
+            p.P = null;
+            Display.SetActive(false);
+        }
+       
+        if (Cost == 0)
+        {
+            Cost = Reasource / 2 + rand(0, 50);
         }
         if (p.Timer <= .1f)
         {
-            if (Life >= 2) {
-                Life++;
-                print("add life");
+            if (Life >= 2)
+            {
+                int mod = Life/2;
+                Life += mod;
             }
         }
         CalculateMass();
-
 
         if (Reasource <= 0)
         {
             //Died
             Destroy(gameObject);
-            print("Die");
         }
-        Costtext.text = "Cost:" + Cost; 
+        Costtext.text = "Cost:" + Cost;
         Medal.SetActive(Owned);
         Resouces.text = "Reasoces:" + Reasource + " Life forms " + Life;
         NameText.text = Name;
@@ -216,17 +232,20 @@ public class Planet : MonoBehaviour
             p.P = gameObject.GetComponent<Planet>();
             Selected = true;
         }
-        else {
+        else
+        {
             if (p.P == gameObject.GetComponent<Planet>())
             {
                 Selected = false;
                 p.P = null;
                 Display.SetActive(false);
             }
-            else if(p.P != gameObject.GetComponent<Planet>()) {
-                if (p.P !=null) {
+            else if (p.P != gameObject.GetComponent<Planet>())
+            {
+                if (p.P != null)
+                {
                     p.P.Display.SetActive(false);
-                } 
+                }
                 print("Different");
                 Selected = false;
                 p.P = gameObject.GetComponent<Planet>();
@@ -252,7 +271,10 @@ public class Planet : MonoBehaviour
         if (col.gameObject.tag == "Planet")
         {
             Destroy(col.gameObject);
-            print("test");
+        }
+        else if(col.gameObject.tag == "Sun") {
+         //   col.gameObject.GetComponent<Planet>().Reasource+=Reasource;
+            Destroy(gameObject);
         }
     }
 }

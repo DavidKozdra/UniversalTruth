@@ -10,7 +10,7 @@ public class Orbit : MonoBehaviour {
     public SUN Sun => FindObjectOfType<SUN>();
     // Use this for initialization
     void Start () {
-
+        OrbitSpeed = rand(.0001f,1.004f);
         if (Sun !=null) {
             float dist = Vector3.Distance(Sun.gameObject.transform.position, transform.position);
             if (dist >= 100)
@@ -24,11 +24,18 @@ public class Orbit : MonoBehaviour {
             }
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (Sun!=null) {
+
+
+    float rand(float Min, float Max)
+    {
+        return UnityEngine.Random.Range(Min, Max); ;
+    }
+    // Update is called once per frame
+    void Update () {
+        if (Sun != null)
+        {
             transform.RotateAround(Sun.gameObject.transform.position, zAxis, OrbitSpeed);
         }
+
     }
 }

@@ -7,10 +7,10 @@ using System;
 public class Player : MonoBehaviour
 {
 
-    public int Currency, EarningRate;
-    public float Timer = 20f, AddTimer=4f, Speed = 5f;
-    public Text Money,AddText;
-    public Planet P=null;
+    public int Currency, EarningRate,Karma;
+    public float Timer = 20f, AddTimer = 4f, Speed = 5f;
+    public Text Money, AddText;
+    public Planet P = null;
     public GameObject Display;
     public List<GameObject> OwnedPlanets = new List<GameObject>();
     // Use this for initialization
@@ -20,14 +20,17 @@ public class Player : MonoBehaviour
     }
 
 
-    public void Define() {
+    public void Define()
+    {
 
         if (Planet.Selected)
         {
-            if (P != null) {
+            if (P != null)
+            {
             }
         }
-        else {
+        else
+        {
             P = null;
         }
     }
@@ -41,11 +44,11 @@ public class Player : MonoBehaviour
             AddTimer -= .1f;
             if (AddTimer <= 0)
             {
-               AddText.gameObject.SetActive(false);
+                AddText.gameObject.SetActive(false);
                 AddTimer = 4f;
             }
         }
-        Money.text = "Money:" + Currency;
+        Money.text = "ӫ:" + Currency;
         Timer -= .1f;
         if (Timer <= 0f)
         {
