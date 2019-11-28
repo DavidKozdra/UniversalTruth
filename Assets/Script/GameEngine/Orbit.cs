@@ -10,7 +10,7 @@ public class Orbit : MonoBehaviour {
     public SUN Sun => FindObjectOfType<SUN>();
     // Use this for initialization
     void Start () {
-        OrbitSpeed = rand(.0001f,1.004f);
+        OrbitSpeed = rand(.0001f,.7f);
         if (Sun !=null) {
             float dist = Vector3.Distance(Sun.gameObject.transform.position, transform.position);
             if (dist >= 100)

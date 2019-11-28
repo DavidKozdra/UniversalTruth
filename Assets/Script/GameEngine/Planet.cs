@@ -21,13 +21,14 @@ public class Planet : MonoBehaviour
 
     public GameObject Medal, Highlight, Display, BuyDisplay, MineB, EnslaveB, TradeB, HarvestB, MainDisplay, Dyson;
     public string Name;
-    public int Reasource, Life;
+    public int Reasource, Life, MineCost=50;
     public bool Owned, renew;
     public string[] Names = { "Gia ", "Gazorpazorp", "Alphabetrium", "Vogsphere ", "Cybertron ", "Dagobah ", "Dirt", "Vegetable" };
     public int Cost;
     public static bool Selected;
     public Player p => FindObjectOfType<Player>();
-    public Text Costtext, Resouces, NameText;
+    public Text Costtext, Resouces, NameText,mineCostText;
+    public float oldspeed;
 
     int rand(int Min, int Max)
     {
@@ -41,6 +42,10 @@ public class Planet : MonoBehaviour
         if (r == 2)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(rand(0, 150), rand(0, 10), 0, 1);
+        }
+        if (gameObject.GetComponent<Orbit>() != null)
+        {
+            oldspeed = gameObject.GetComponent<Orbit>().OrbitSpeed;
         }
 
         Name = Names[rand(0, Names.Length)];
@@ -93,7 +98,6 @@ public class Planet : MonoBehaviour
                 if (gameObject.name == p.P.name)
                 {
                     MineB.SetActive(true);
-                    HarvestB.SetActive(true);
                     EnslaveB.SetActive(true);
 
                 }
@@ -103,7 +107,6 @@ public class Planet : MonoBehaviour
                 if (Display.activeSelf) {
                     p.P = gameObject.GetComponent<Planet>();
                     MineB.SetActive(false);
-                    HarvestB.SetActive(false);
                     EnslaveB.SetActive(false);
                 }
             }
@@ -112,11 +115,11 @@ public class Planet : MonoBehaviour
     }
     public void Enslave()
     {
-        if (Life >= 1)
+        if (Life >= 2)
         {
             if (p.P != null)
             {
-                p.P.Life -= 1;
+                p.P.Life -= p.P.Life/2;
                 p.EarningRate += 2;
 
             }
@@ -130,16 +133,17 @@ public class Planet : MonoBehaviour
     }
     public void BuyMine()
     {
-        if (Reasource >= 50 && p.Currency >= 25)
+        if (Reasource >= 50 && p.Currency >= MineCost)
         {
             if (p.P != null)
             {
                 p.P = gameObject.GetComponent<Planet>();
                 p.P.Reasource -= 50;
-                p.Currency -= 25;
+                p.Currency -= MineCost;
                 p.EarningRate += 2;
                 p.AddText.gameObject.SetActive(true);
                 p.AddText.text = "-" + 50;
+                MineCost *= 2;
             }
             else { print(" am null"); }
         }
@@ -162,16 +166,19 @@ public class Planet : MonoBehaviour
                 p.AddText.text = "-" + 100;
             }
             else { print(" am null");
+
                 p.P = gameObject.GetComponent<Planet>();
             }
         }
         else {
+
+            p.AddText.gameObject.SetActive(true);
             p.AddText.text = "Not enough Currency";
         }
         CalculateButtons();
     }
     public void CalculateMass()
-    {
+    {   
         int mass = Reasource - 90;
         if (transform.localScale.x <= (mass) / 2)
         {
@@ -221,10 +228,12 @@ public class Planet : MonoBehaviour
         Medal.SetActive(Owned);
         Resouces.text = "Reasoces:" + Reasource + " Life forms " + Life;
         NameText.text = Name;
+        mineCostText.text = MineCost.ToString();
     }
 
     private void OnMouseDown()
     {
+ 
         // on UI elements 
         if (!Selected)
         {
@@ -239,6 +248,7 @@ public class Planet : MonoBehaviour
                 Selected = false;
                 p.P = null;
                 Display.SetActive(false);
+
             }
             else if (p.P != gameObject.GetComponent<Planet>())
             {
@@ -246,6 +256,7 @@ public class Planet : MonoBehaviour
                 {
                     p.P.Display.SetActive(false);
                 }
+
                 print("Different");
                 Selected = false;
                 p.P = gameObject.GetComponent<Planet>();
@@ -258,19 +269,27 @@ public class Planet : MonoBehaviour
     void OnMouseOver()
     {
         Highlight.SetActive(true);
-
+        if (gameObject.GetComponent<Orbit>() != null)
+        {
+            gameObject.GetComponent<Orbit>().OrbitSpeed = 0;
+        }
     }
     void OnMouseExit()
     {
         Highlight.SetActive(false);
-
+        if (gameObject.GetComponent<Orbit>() != null)
+        {
+            gameObject.GetComponent<Orbit>().OrbitSpeed = oldspeed;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Planet")
         {
-            Destroy(col.gameObject);
+            if (col.gameObject.GetComponent<Planet>().Reasource>=Reasource) {
+                Destroy(gameObject);
+            }
         }
         else if(col.gameObject.tag == "Sun") {
          //   col.gameObject.GetComponent<Planet>().Reasource+=Reasource;
