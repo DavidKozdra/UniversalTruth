@@ -1,14 +1,21 @@
-# Universal-Truth
- Unity 2D game C#
- Camera: Birds Eye View 
- Genera: space /incremental
 
-This is a simple C# game using unity which allows the player to move through space collecting reasources and buying planets.
 
-Features-
-movement and physics
-2d lighting
-UI control
+# Introduction to Universal Truth
+Click planets to buy them then start collecting, and try to not destroy everything
+
+Controls
+* Movement - WASD
+* Zoom - Mouse scroll wheel
+* Click- Interact
+* Most buttons are pressed again to shut off UI or try esc 
+
+##  Features
+* Movement and physics
+* 2d lighting
+* UI control
+* Intersteller Enviroment
+
+###  Product Presentation
 
 The game's itch page:
 https://magentaautumn.itch.io/universal-truth
