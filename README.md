@@ -1,7 +1,7 @@
 
 
 # Introduction to Universal Truth
-Click planets to buy them, then start collecting, and try to not destroy everything.
+Click planets to buy them, then start collecting, and try to not destroy everything. 2D unity incremental space game.
 
 Controls
 * Movement - WASD
