@@ -9,15 +9,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4598500348929872}
-  - component: {fileID: 114595490237811176}
   - component: {fileID: 114816209132376178}
+  - component: {fileID: 352340844731267420}
   - component: {fileID: 212223864589968916}
   - component: {fileID: 50469854975274434}
   - component: {fileID: 114121952813599196}
   - component: {fileID: 61845316976878422}
+  - component: {fileID: 6138677843919478115}
   m_Layer: 0
   m_Name: Astroid
-  m_TagString: Untagged
+  m_TagString: Astroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,27 +32,11 @@ Transform:
   m_GameObject: {fileID: 1881591299919634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.55, y: -1.4100001, z: 90}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114595490237811176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1881591299919634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a52e3f5f37943464794f0a66e806b5b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Pics:
-  - {fileID: 21300004, guid: 41fb1b75bfa1d5a4aba0d7fc683f507a, type: 3}
-  - {fileID: 21300010, guid: 41fb1b75bfa1d5a4aba0d7fc683f507a, type: 3}
-  Time: 10
 --- !u!114 &114816209132376178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +51,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rb: {fileID: 50469854975274434}
   speed: 2
+--- !u!114 &352340844731267420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881591299919634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de074ec9adf213d4dbc3be911d428160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Images:
+  - {fileID: 3275028520990625885, guid: cf68f39b69c9cb94aaf081324fa7249c, type: 3}
+  - {fileID: 4810702507026764722, guid: d37a365a0c1c88445b9096d8f986753a, type: 3}
 --- !u!212 &212223864589968916
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80,6 +80,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -104,7 +106,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300010, guid: 41fb1b75bfa1d5a4aba0d7fc683f507a, type: 3}
+  m_Sprite: {fileID: 4810702507026764722, guid: d37a365a0c1c88445b9096d8f986753a,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -148,6 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7905018a0278307408f7951c6a546fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indicater: {fileID: 7834011311456529250, guid: dddb1fa448117fb4ab9c0ea3565067fe,
+    type: 3}
+  Reasource: 20
+  life: 0
 --- !u!61 &61845316976878422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -165,12 +172,29 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.44, y: 0.36}
+    oldSize: {x: 2, y: 1.8571428}
     newSize: {x: 0.15, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.44, y: 0.36}
+  m_Size: {x: 2, y: 1.8571428}
   m_EdgeRadius: 0
+--- !u!114 &6138677843919478115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881591299919634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e3f60fdd17ab934487b4157cb359afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Atractor: {fileID: 5985066019531933671, guid: b7507d6dd5b3a2b4993338e429fac794,
+    type: 3}
+  maxGravity: 10
+  maxGravityDist: 5
+  RGB: {fileID: 50469854975274434}

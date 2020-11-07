@@ -7,6 +7,7 @@ TagManager:
   - Planatoid
   - Planet
   - Sun
+  - Astroid
   layers:
   - Default
   - TransparentFX

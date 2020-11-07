@@ -7,6 +7,7 @@ public class Collectable : MonoBehaviour
 {
 
     Player player => FindObjectOfType<Player>();
+    public GameObject indicater;
     public int Reasource = 10,life;
     // Use this for initialization
     void Start()
@@ -17,6 +18,8 @@ public class Collectable : MonoBehaviour
         if (life!=0) {
             life = rand(1, 4);
         }
+
+        gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x + (Reasource/5), gameObject.transform.localScale.y + (Reasource / 5));
     }
     int rand(int Min, int Max)
     {
@@ -27,33 +30,16 @@ public class Collectable : MonoBehaviour
     {
     }
 
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Player")
         {
-
-            if (Reasource != 0)
-            {
-                player.AddText.gameObject.SetActive(true);
-                player.AddText.text = "+" + Reasource;
-                Destroy(gameObject);
-            }
+            GameObject.Instantiate(indicater,new Vector2(transform.position.x +.1f,transform.position.y),Quaternion.identity);
+            Destroy(gameObject);  
             player.Currency += Reasource;
         }
-        else if (col.gameObject.tag == "Planet")
-        {
-            Planet p = col.gameObject.GetComponent<Planet>();
-            p.Reasource += Reasource;
-            p.Life += life;
-            if (p.Owned)
-            {
-                if (Reasource!=0) {
-                    player.AddText.gameObject.SetActive(true);
-                    player.AddText.text = "+" + Reasource;
-                }
-            }
-            Destroy(gameObject);
-        } else if (col.gameObject.tag == "Sun") {
+         else if (col.gameObject.tag == "Sun") {
 
             Destroy(gameObject);
         }

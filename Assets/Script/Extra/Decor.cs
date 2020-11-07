@@ -5,25 +5,25 @@ using UnityEngine;
 public class Decor : MonoBehaviour
 {
     public Sprite[] Pics;
-    public float Time;
+    public float Timer;
     float PastTime;
     // Start is called before the first frame update
     void Start()
     {
-        PastTime = Time;
+        PastTime = Timer;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time > 0)
+        if (Timer > 0)
         {
-            Time-=.2f;
+            Timer-=Time.deltaTime;
         }
-        else if(Time <=0)
+        else if(Timer <=0)
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = Pics[rand()];
-            Time = PastTime;
+            Timer = PastTime;
         }
 
     }

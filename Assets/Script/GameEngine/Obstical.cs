@@ -21,6 +21,8 @@ public class Obstical : MonoBehaviour
 
         Vector3 movement = new Vector3(-1, 0.0f);
         Rb.velocity = movement * speed;
+        
+       // to far from player delete 
     }
 
 }
