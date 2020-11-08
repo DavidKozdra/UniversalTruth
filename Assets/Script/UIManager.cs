@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
     public void BuyMine() {
         if (Player.Currency > CurrentPlanet.MineCost) {
             Player.Currency -= CurrentPlanet.MineCost;
-            Player.EarningRate += 5;
+            Player.EarningRate += 10;
             CurrentPlanet.Reasource -= 100;
             CurrentPlanet.MineCost *= 5;
         } else {

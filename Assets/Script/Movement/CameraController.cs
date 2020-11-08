@@ -21,14 +21,14 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (zoomSize > 1)
+            if (zoomSize > 5)
             {
-                zoomSize -= 10;
+                zoomSize -= 8;
             }
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            zoomSize += 10;
+            zoomSize += 8;
         }
         gameObject.GetComponent<Camera>().orthographicSize = zoomSize;
 

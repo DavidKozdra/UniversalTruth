@@ -159,7 +159,7 @@ public class Planet : MonoBehaviour
                     Life -= rand(-2, 20);
                 }
             }
-            Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
         }
         if (col.gameObject.tag == "Planet")
         {

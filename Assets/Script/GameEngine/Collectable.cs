@@ -35,11 +35,11 @@ public class Collectable : MonoBehaviour
         {
             player.Currency += Reasource;
             GameObject.Instantiate(indicater,new Vector2(transform.position.x +.1f,transform.position.y),Quaternion.identity);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
          else if (col.gameObject.tag == "Sun" || col.gameObject.tag == "Astroid" ) {
 
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
     }
