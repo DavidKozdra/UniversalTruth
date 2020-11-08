@@ -59,12 +59,14 @@ public class Spawner : MonoBehaviour
                 stop = false;
             }
         }
-        if (Timer <= 0 && !stop)
+        if (Timer <= 0)
         {
-            Count++;
-            //needs to be under parent object  set parent object how to select closest planet 
-            Instantiate(PickRandom(), new Vector3(gameObject.transform.position.x + rand(-XRange, XRange), gameObject.transform.position.y + rand(-YRange, YRange), -1), Quaternion.identity);
-            Timer = rand2(0, OB);
+            if (!stop) {
+
+                Count++;
+                Instantiate(PickRandom(), new Vector3(gameObject.transform.position.x + rand(-XRange, XRange), gameObject.transform.position.y + rand(-YRange, YRange), -1), Quaternion.identity);
+            }
+            Timer = OB;
         }
         else
         {

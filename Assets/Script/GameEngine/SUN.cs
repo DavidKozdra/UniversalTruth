@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SUN : Planet
+public class SUN : MonoBehaviour
 {
 
     // Use this for initialization
     void Start()
     {
-        Life = 0;
+      
     }
 
     // Update is called once per frame
