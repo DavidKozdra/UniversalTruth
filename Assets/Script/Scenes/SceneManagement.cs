@@ -14,8 +14,8 @@ public class SceneManagement : MonoBehaviour
     {
         Application.Quit();
     }
-    public void TransferTo(string scene) {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
+    public void TransferTo() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     // Update is called once per frame
