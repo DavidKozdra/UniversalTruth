@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
         o = Timer;
     }
 
+
+
     // Update is called once per frame
     void Update()
     {

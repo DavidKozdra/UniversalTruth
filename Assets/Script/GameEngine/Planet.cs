@@ -16,9 +16,16 @@ public class Planet : MonoBehaviour
     public int Cost;
     public static bool Selected;
     public Sprite image;
+    public AudioClip[] clips;
     public Player Player => FindObjectOfType<Player>();
 
     public float oldspeed;
+
+    private void playsound(int index)
+    {
+        gameObject.GetComponent<AudioSource>().clip = clips[index];
+        gameObject.GetComponent<AudioSource>().Play();
+    }
 
     int rand(int Min, int Max)
     {
@@ -75,13 +82,19 @@ public class Planet : MonoBehaviour
         {
             if (Life >= 2)
             {
-                int mod = (int)Life / 2; //breeding
-                Life -= (int)Life /4; //breeding
-                Life += mod + Farm;
+                int mod = (int)Life / 6; //breeding
+                if (Life % 100 < Farm)
+                {
+                    Life -= (int)Life / Life % 100; //death
+                }
+                else
+                {
+                    Life += mod + Farm;
+                }
             }
         }
         if (gameObject.GetComponent<Planet>() == UIManager.CurrentPlanet) {
-            if (Vector2.Distance(gameObject.transform.position, Player.transform.position) >= 25) {
+            if (!gameObject.GetComponent<Renderer>().isVisible) {
                 Selected = false;
                 UIManager.CurrentPlanet = null;
             }
@@ -89,9 +102,12 @@ public class Planet : MonoBehaviour
         if (Reasource <= 0)
         {
             //Die
-            GameObject.Instantiate(Explosion,transform.position,Quaternion.identity);
-            Destroy(gameObject);
+            die();
         }
+    }
+    private void die() {
+        GameObject.Instantiate(Explosion, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     private void OnMouseDown()
@@ -99,11 +115,14 @@ public class Planet : MonoBehaviour
         // on UI elements 
         if (!Selected && !EventSystem.current.IsPointerOverGameObject())
         {
+            playsound(0);
             //pass to UI
             UIManager.CurrentPlanet = gameObject.GetComponent<Planet>();
             Selected = true;
         }
         else if (!EventSystem.current.IsPointerOverGameObject()) {
+
+            playsound(1);
             UIManager.CurrentPlanet = null;
             Selected = false;
         }
@@ -149,8 +168,9 @@ public class Planet : MonoBehaviour
             }
         }
         else if(col.gameObject.tag == "Sun") {
-         //   col.gameObject.GetComponent<Planet>().Reasource+=Reasource;
-            Destroy(gameObject);
+            //   col.gameObject.GetComponent<Planet>().Reasource+=Reasource;
+
+            die();
         }
     }
 }
