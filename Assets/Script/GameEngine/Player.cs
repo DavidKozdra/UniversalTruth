@@ -7,7 +7,7 @@ using System;
 public class Player : MonoBehaviour
 {
     public int Currency, EarningRate,Karma;
-    public float Timer = 10f, AddTimer = 4f, Speed = 5f;
+    public float Timer = 10f, Speed = 5f;
     public Planet P = null;
     public List<Transform> OwnedPlanets = new List<Transform>();
     float o;

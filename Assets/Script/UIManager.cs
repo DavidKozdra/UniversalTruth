@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     {
         if (Player.Currency > 25)
         {
-            Player.Currency -= 25;
+            Player.Currency -= 25; //adabtive cost 
             CurrentPlanet.Farm += 1;
         }
         else
@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour
         ReasourceSlider.maxValue = 1000;
     }
     public void NameChange() {
-
+        print("namechange");
         if (CurrentPlanet != null && CurrentPlanet.Owned)
         {
             changename = true;
@@ -111,6 +111,7 @@ public class UIManager : MonoBehaviour
         }
     }
     public void Deselectname() {
+        print("edit done");
         changename = false;
     }
     // Update is called once per frame
@@ -155,6 +156,9 @@ public class UIManager : MonoBehaviour
         if (CurrentPlanet != null && !CurrentPlanet.Owned)
         {
             NameText.interactable = false;
+        }
+        else {
+            NameText.interactable = true;
         }
             if (Input.GetKeyDown(KeyCode.Escape)) {
             CurrentPlanet = null;

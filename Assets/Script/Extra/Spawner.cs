@@ -18,6 +18,7 @@ public class Spawner : MonoBehaviour
     public int Count, SpawnedMax;
     public float Timer = 2f,YRange, XRange;
     float OB;
+    public bool Planet;
 
     public GameObject PickRandom()
     {
@@ -61,16 +62,29 @@ public class Spawner : MonoBehaviour
         }
         if (Timer <= 0)
         {
-            if (!stop) {
+            if (!stop)
+            {
 
                 Count++;
                 Instantiate(PickRandom(), new Vector3(gameObject.transform.position.x + rand(-XRange, XRange), gameObject.transform.position.y + rand(-YRange, YRange), -1), Quaternion.identity);
+                //if (!Planet)
+                //{
+                //    Instantiate(PickRandom(), new Vector3(gameObject.transform.position.x + rand(-XRange, XRange), gameObject.transform.position.y + rand(-YRange, YRange), -1), Quaternion.identity);
+                //}
+                //else {
+                //    Instantiate(PickRandom(), new Vector3( rand(XRange,YRange), rand(XRange, YRange), -1), Quaternion.identity);
+                //}
             }
             Timer = OB;
         }
         else
         {
             Timer -= Time.deltaTime;
+        }
+
+        if (Planet) {
+           XRange = gameObject.transform.localScale.x - .5f;
+            YRange = gameObject.transform.localScale.y -.5f;
         }
     }
     float rand2(float Min, float Max)
