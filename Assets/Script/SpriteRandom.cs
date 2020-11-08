@@ -12,4 +12,9 @@ public class SpriteRandom : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = Images[Random.Range(0,Images.Length)];
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

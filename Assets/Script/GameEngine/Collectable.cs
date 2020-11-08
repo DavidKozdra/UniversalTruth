@@ -10,11 +10,13 @@ public class Collectable : MonoBehaviour
     public GameObject indicater;
     public int Reasource = 10,life;
     // Use this for initialization
-
     void Start()
     {
         if (Reasource != 0) {
-            Reasource = rand(1, Reasource);
+            Reasource = rand(1, 12);
+        }
+        if (life!=0) {
+            life = rand(1, 4);
         }
 
         gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x + (Reasource/5), gameObject.transform.localScale.y + (Reasource / 5));
@@ -33,11 +35,11 @@ public class Collectable : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            player.Currency += Reasource;
             GameObject.Instantiate(indicater,new Vector2(transform.position.x +.1f,transform.position.y),Quaternion.identity);
-            Destroy(gameObject);
+            Destroy(gameObject);  
+            player.Currency += Reasource;
         }
-         else if (col.gameObject.tag == "Sun" || col.gameObject.tag == "Astroid" ) {
+         else if (col.gameObject.tag == "Sun") {
 
             Destroy(gameObject);
         }

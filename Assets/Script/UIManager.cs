@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject PlanetDislpay, PlanetShopDisplay, BuyButton,msglist, PlanetMapItem;
     public Planet CurrentPlanet;
     public ScrollRect PlanetViewer;
-    public TMP_Text BuyText,MoneyText,PoorText,CostText,EarningText;
+    public TMP_Text BuyText,MoneyText,PoorText,CostText;
     public TMP_Text MineCostText, Lifeaddtext, FarmCostText;
     public Slider LifeSlider, ReasourceSlider;
     public Image PlanetPicture;
@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     bool changename;
     public Player Player;
     private ToolTip ToolTip;
-    public AudioClip[] clips;
 
     //if an object is addded or bought add to scroll rect values 
 
@@ -29,7 +28,7 @@ public class UIManager : MonoBehaviour
         {
             int num = CurrentPlanet.Life / 2;
             CurrentPlanet.Life /= 2;
-            Player.Currency += num /3;
+            Player.Currency += num;
             PoorText.text = "";
         }
         else
@@ -67,15 +66,9 @@ public class UIManager : MonoBehaviour
     public void TransportTo() { 
     
     }
-    private void playsound(int index) {
-        gameObject.GetComponent<AudioSource>().clip = clips[index];
-        gameObject.GetComponent<AudioSource>().Play();
-    }
     public void Purchase() {
         if (Player.Currency >= CurrentPlanet.Cost)
         {
-            playsound(0);
-            Player.EarningRate += 1;
             CurrentPlanet.Owned = true;
             Player.Currency -= CurrentPlanet.Cost;
             CurrentPlanet.Owned = true;
@@ -117,13 +110,13 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         if (CurrentPlanet != null) {
+
             MineCostText.text = "Add a Mine" +" - "+ CurrentPlanet.MineCost.ToString();
-            Lifeaddtext.text = "Sell Life" + " +"+ (CurrentPlanet.Life/6).ToString();
+            Lifeaddtext.text = "Sell Life" + " +"+ (CurrentPlanet.Life/8).ToString();
             LifeSlider.value = CurrentPlanet.Life;
             ReasourceSlider.value = CurrentPlanet.Reasource;
         }
         MoneyText.text = Player.Currency.ToString();
-        EarningText.text = "Income: "+Player.EarningRate.ToString();
         if (CurrentPlanet != null)
         {
             ToolTip.IsTooltipVisable(false);
