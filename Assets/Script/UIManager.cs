@@ -23,17 +23,20 @@ public class UIManager : MonoBehaviour
     //if an object is addded or bought add to scroll rect values 
 
     // buy mine
-    public void SellLife()
+    public void SellLife() //sell life forms 
     {
-        if (CurrentPlanet.Life >= 1)
+        if (CurrentPlanet.Life >= 1) //check life on planet
         {
-            int num = CurrentPlanet.Life / 2;
-            CurrentPlanet.Life /= 2;
-            Player.Currency += num /3;
-            PoorText.text = "";
+
+            playsound(0);
+            int num = CurrentPlanet.Life / 2; //sell half the life on planet
+            CurrentPlanet.Life /= 2; //set to half
+            Player.Currency += num /3; // each life is worth 1/3
+            PoorText.text = ""; // reset poor text
         }
         else
         {
+            playsound(1);
             PoorText.text = "Not engough Life";
         }
     }
@@ -42,24 +45,31 @@ public class UIManager : MonoBehaviour
 
     public void BuyFarm()
     {
-        if (Player.Currency > 25)
+        if (Player.Currency >= CurrentPlanet.FarmCost)
         {
-            Player.Currency -= 25; //adabtive cost 
+
+            playsound(0);
+            Player.Currency -= CurrentPlanet.FarmCost; //adabtive cost 
             CurrentPlanet.Farm += 1;
+            CurrentPlanet.FarmCost *= 4;
         }
         else
         {
+            playsound(1);
             PoorText.text = "Too Poor";
         }
     }
 
     public void BuyMine() {
         if (Player.Currency > CurrentPlanet.MineCost) {
+
+            playsound(0);
             Player.Currency -= CurrentPlanet.MineCost;
-            Player.EarningRate += 10;
+            Player.EarningRate += 20;
             CurrentPlanet.Reasource -= 100;
             CurrentPlanet.MineCost *= 5;
         } else {
+            playsound(1);
             PoorText.text = "Too Poor";
         }
     }
@@ -75,7 +85,7 @@ public class UIManager : MonoBehaviour
         if (Player.Currency >= CurrentPlanet.Cost)
         {
             playsound(0);
-            Player.EarningRate += 1;
+            Player.EarningRate += 2;
             CurrentPlanet.Owned = true;
             Player.Currency -= CurrentPlanet.Cost;
             CurrentPlanet.Owned = true;
@@ -83,11 +93,14 @@ public class UIManager : MonoBehaviour
             Player.OwnedPlanets.Add(CurrentPlanet.GetComponentInParent<Transform>());
             GameObject msg = Instantiate(PlanetMapItem, msglist.transform);
             msg.GetComponent<PlanetMapItem>().SavedPostion = CurrentPlanet.transform.position;
+            msg.GetComponent<PlanetMapItem>().NameText.text = CurrentPlanet.name;
+            msg.GetComponent<PlanetMapItem>().I.sprite = CurrentPlanet.GetComponent<SpriteRenderer>().sprite;
 
             PoorText.text = " ";
         }
         else {
             PoorText.text = "Too Poor";
+            playsound(1);
         }
     }
     
@@ -96,7 +109,7 @@ public class UIManager : MonoBehaviour
     {
         ToolTip = FindObjectOfType<ToolTip>();
         Player = FindObjectOfType<Player>();
-        LifeSlider.maxValue = 700;
+        LifeSlider.maxValue = 2000;
         ReasourceSlider.maxValue = 1000;
     }
     public void NameChange() {
@@ -111,7 +124,7 @@ public class UIManager : MonoBehaviour
         }
     }
     public void Deselectname() {
-        print("edit done");
+        //edit is done
         changename = false;
     }
     // Update is called once per frame
@@ -158,6 +171,7 @@ public class UIManager : MonoBehaviour
             NameText.interactable = false;
         }
         else {
+
             NameText.interactable = true;
         }
             if (Input.GetKeyDown(KeyCode.Escape)) {

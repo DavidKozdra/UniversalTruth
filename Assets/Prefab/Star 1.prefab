@@ -172,6 +172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856543d14b053bf4fbb0efd0083efa80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Names:
+  - Protar system
+  - Marloc system
+  - Nintendo System
 --- !u!50 &4774125479584627560
 Rigidbody2D:
   serializedVersion: 4

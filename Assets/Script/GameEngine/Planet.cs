@@ -10,7 +10,7 @@ public class Planet : MonoBehaviour
     public UIManager UIManager;
     public GameObject Medal,Explosion;
     public string Name;
-    public int Reasource, Life, MineCost=50,Farm;
+    public int Reasource, Life, MineCost=50,Farm, FarmCost=25;
     public bool Owned;
     public string[] Names = { "Gia ", "Gazorpazorp", "Alphabetrium", "Vogsphere ", "Cybertron ", "Dagobah ", "Dirt", "Vegetable", "Proxima Centauri", "Wolf 359#", "Lalande 21185", "Epsilon Eridani", "Tau Ceti", "Gliese 1061", "Gliese 784", "CD Ceti", "AU Microscopii", "Stav","HomeWorld","Hikikomori","Slarf","Sqwanch" };
     public int Cost;
@@ -29,7 +29,7 @@ public class Planet : MonoBehaviour
 
     int rand(int Min, int Max)
     {
-        return UnityEngine.Random.Range(Min, Max); ;
+        return UnityEngine.Random.Range(Min, Max);
     }
 
     // Use this for initialization
@@ -37,7 +37,6 @@ public class Planet : MonoBehaviour
     {
         UIManager = FindObjectOfType<UIManager>();
         image = GetComponent<SpriteRenderer>().sprite;
-        int r = rand(1, 3);
         if (gameObject.GetComponent<Orbit>() != null)
         {
             oldspeed = gameObject.GetComponent<Orbit>().OrbitSpeed;
@@ -47,7 +46,7 @@ public class Planet : MonoBehaviour
         name = Name;
         Player.P = null;
         Reasource = rand(70, 700);
-        Life =  rand(0, 500);
+        Life =  rand(0, 800);
         
     }
 
@@ -78,14 +77,15 @@ public class Planet : MonoBehaviour
         {
             Cost = Reasource / 2 + rand(0, 20) + Life/20 ;
         }
-        if (Player.Timed)
-        {
+        if (Player.Timed) { //this is needed or things break
             if (Life >= 2)
             {
                 int mod = (int)Life / 6; //breeding
-                if (Life % 100 < Farm)
+                if ((Life / 100) >= Farm) // 100 people per farm 
                 {
-                    Life -= (int)Life / Life % 100; //death
+                    if ((Life / 100) != 0) {
+                        Life -= (int)Life / 20; //death
+                    }
                 }
                 else
                 {
@@ -101,7 +101,6 @@ public class Planet : MonoBehaviour
         }
         if (Reasource <= 0)
         {
-            //Die
             die();
         }
     }
