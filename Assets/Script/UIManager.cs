@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Reflection;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject PlanetDislpay, PlanetShopDisplay, BuyButton,msglist, PlanetMapItem;
     public Planet CurrentPlanet;
     public ScrollRect PlanetViewer;
-    public TMP_Text BuyText,MoneyText,PoorText,CostText,EarningText;
+    public TMP_Text BuyText,MoneyText,PoorText,CostText,EarningText,FactoryText,schooltext;
     public TMP_Text MineCostText, Lifeaddtext, FarmCostText;
     public Slider LifeSlider, ReasourceSlider;
     public Image PlanetPicture;
@@ -31,13 +32,65 @@ public class UIManager : MonoBehaviour
             playsound(0);
             int num = CurrentPlanet.Life / 2; //sell half the life on planet
             CurrentPlanet.Life /= 2; //set to half
-            Player.Currency += num /3; // each life is worth 1/3
+            Player.Currency += (num +CurrentPlanet.school )/3; // each life is worth 1/3
             PoorText.text = ""; // reset poor text
         }
         else
         {
             playsound(1);
             PoorText.text = "Not engough Life";
+        }
+    }
+
+
+    public void BuyFactory()  
+    {
+        if (CurrentPlanet.MineCost >= 1350 ) 
+        {
+            if (Player.Currency >= CurrentPlanet.FactoryCost)
+            {
+                playsound(0);
+                Player.Currency -= CurrentPlanet.FactoryCost;
+                CurrentPlanet.FactoryCost *= 3;
+                Player.EarningRate += 40;
+                PoorText.text = ""; // reset poor text
+            }
+            else
+            {
+                playsound(1);
+                PoorText.text = "Too Poor";
+            }
+
+        }
+        else
+        {
+            playsound(1);
+            PoorText.text = "Need " + (3) + " Mines";
+        }
+    }
+
+
+    public void BuySchool() 
+    {
+        if (((CurrentPlanet.FarmCost)) >= 625) 
+        {
+            if (Player.Currency >= CurrentPlanet.schoolcost)
+            {
+                playsound(0);
+                Player.Currency -= CurrentPlanet.schoolcost;
+                CurrentPlanet.schoolcost *= 4;
+                PoorText.text = ""; // reset poor text
+            }
+            else {
+                playsound(1);
+                PoorText.text = "Too Poor";
+            }
+
+        }
+        else
+        {
+            playsound(1);
+            PoorText.text = "Need " +(3) + " Farms"; //current amount of each item
         }
     }
 
@@ -113,18 +166,20 @@ public class UIManager : MonoBehaviour
         ReasourceSlider.maxValue = 1000;
     }
     public void NameChange() {
-        print("namechange");
         if (CurrentPlanet != null && CurrentPlanet.Owned)
         {
+            print("Active");
             changename = true;
+            Player.Paused = true;
             CurrentPlanet.name = NameText.text;
         }
-        else { 
-        
-        }
+     
     }
     public void Deselectname() {
         //edit is done
+        CurrentPlanet.name = NameText.text;
+        print("Deactive");
+        Player.Paused = false;
         changename = false;
     }
     // Update is called once per frame
@@ -132,7 +187,10 @@ public class UIManager : MonoBehaviour
     {
         if (CurrentPlanet != null) {
             MineCostText.text = "Add a Mine" +" - "+ CurrentPlanet.MineCost.ToString();
-            Lifeaddtext.text = "Sell Life" + " +"+ (CurrentPlanet.Life/6).ToString();
+            Lifeaddtext.text = "Sell Life" + " +"+ ((CurrentPlanet.Life + CurrentPlanet.school) / 3).ToString();
+            FarmCostText.text = "Buy Farm" + "- " + CurrentPlanet.FarmCost.ToString();
+            FactoryText.text = "Buy Factory" + "- " + CurrentPlanet.FactoryCost.ToString();
+            schooltext.text = "Buy school" + "- " + CurrentPlanet.schoolcost.ToString();
             LifeSlider.value = CurrentPlanet.Life;
             ReasourceSlider.value = CurrentPlanet.Reasource;
         }
@@ -171,7 +229,6 @@ public class UIManager : MonoBehaviour
             NameText.interactable = false;
         }
         else {
-
             NameText.interactable = true;
         }
             if (Input.GetKeyDown(KeyCode.Escape)) {

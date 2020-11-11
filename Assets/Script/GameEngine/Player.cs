@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public int Currency, EarningRate;
     public float Timer = 10f, Speed = 5f;
     public Planet P = null;
-    public bool Timed; //needed for life
+    public bool Timed, Paused; //needed for life
     public List<Transform> OwnedPlanets = new List<Transform>();
     float o;
     void Start()
@@ -33,11 +33,11 @@ public class Player : MonoBehaviour
         else {
             Timed = false;
         }
+        if (!Paused) {
+            Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-
-           transform.position += input * Speed * Time.deltaTime;
-      
+            transform.position += input * Speed * Time.deltaTime;
+        }
     }
 
 }

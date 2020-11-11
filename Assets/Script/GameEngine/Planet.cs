@@ -10,7 +10,7 @@ public class Planet : MonoBehaviour
     public UIManager UIManager;
     public GameObject Medal,Explosion;
     public string Name;
-    public int Reasource, Life, MineCost=50,Farm, FarmCost=25;
+    public int Reasource, Life, MineCost=50,Farm, FarmCost=25,FactoryCost=500,school = 0,schoolcost =100;
     public bool Owned;
     public string[] Names = { "Gia ", "Gazorpazorp", "Alphabetrium", "Vogsphere ", "Cybertron ", "Dagobah ", "Dirt", "Vegetable", "Proxima Centauri", "Wolf 359#", "Lalande 21185", "Epsilon Eridani", "Tau Ceti", "Gliese 1061", "Gliese 784", "CD Ceti", "AU Microscopii", "Stav","HomeWorld","Hikikomori","Slarf","Sqwanch" };
     public int Cost;
@@ -89,7 +89,7 @@ public class Planet : MonoBehaviour
                 }
                 else
                 {
-                    Life += mod + Farm;
+                    Life += mod + (Farm*5);
                 }
             }
         }
