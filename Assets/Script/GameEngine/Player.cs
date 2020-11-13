@@ -1,24 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 
 public class Player : MonoBehaviour
 {
     public int Currency, EarningRate;
     public float Timer = 10f, Speed = 5f;
-    public Planet P = null;
     public bool Timed, Paused; //needed for life
     public List<Transform> OwnedPlanets = new List<Transform>();
-    float o;
+    private float oringinalValue;
+
     void Start()
     {
-        P = null;
-        o = Timer;
+        oringinalValue = Timer;
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -28,17 +22,19 @@ public class Player : MonoBehaviour
         {
             Timed = true;
             Currency += EarningRate;
-            Timer = o;
+            Timer = oringinalValue;
         }
-        else {
+        else
+        {
             Timed = false;
         }
-        if (!Paused) {
+
+        if (!Paused)
+        {
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
             transform.position += input * Speed * Time.deltaTime;
         }
     }
-
 }
 

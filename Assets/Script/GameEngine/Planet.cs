@@ -17,8 +17,7 @@ public class Planet : MonoBehaviour
     public static bool Selected;
     public Sprite image;
     public AudioClip[] clips;
-    public Player Player => FindObjectOfType<Player>();
-
+    private Player player;
     public float oldspeed;
 
     private void playsound(int index)
@@ -35,6 +34,7 @@ public class Planet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        player = FindObjectOfType<Player>();
         UIManager = FindObjectOfType<UIManager>();
         image = GetComponent<SpriteRenderer>().sprite;
         if (gameObject.GetComponent<Orbit>() != null)
@@ -44,9 +44,8 @@ public class Planet : MonoBehaviour
 
         Name = Names[rand(0, Names.Length)];
         name = Name;
-        Player.P = null;
         Reasource = rand(70, 700);
-        Life =  rand(0, 800);
+        Life =  rand(0, 300);
         
     }
 
@@ -71,13 +70,16 @@ public class Planet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Life <= 0 ) {
+            Life = 0;
+        }
 
         CalculateMass();
         if (Cost == 0)
         {
             Cost = Reasource / 2 + rand(0, 20) + Life/20 ;
         }
-        if (Player.Timed) { //this is needed or things break
+        if (player.Timed) { //this is needed or things break
             if (Life >= 2)
             {
                 int mod = (int)Life / 6; //breeding

@@ -46,19 +46,15 @@ public class ObjectPooler : MonoBehaviour
         if (Timer <= 0)
         {
             GameObject G = GetPooled();
-            if (G != null) {
-                if (Planet)
-                {
-                    G.transform.position = new Vector2(rand(gameObject.transform.position.x + -XRange, gameObject.transform.position.x + XRange), rand(gameObject.transform.position.y + -YRange, gameObject.transform.position.y + YRange));
-                }
-                else {
-                    G.transform.position = new Vector2(rand(-XRange, XRange), rand(-YRange, YRange));
-                }
-                    G.gameObject.SetActive(true);
-            }
+
+            G.transform.position = new Vector2(rand(gameObject.transform.position.x + -XRange, gameObject.transform.position.x + XRange), rand(gameObject.transform.position.y + -YRange, gameObject.transform.position.y + YRange));
+
+            G.gameObject.SetActive(true);
+
             Timer = o;
         }
-        else {
+        else
+        {
             Timer -= Time.deltaTime;
         }
     }

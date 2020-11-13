@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 5985066019531933670}
   - component: {fileID: 1023670930}
   - component: {fileID: 2085578302}
-  - component: {fileID: 1028721849}
   - component: {fileID: 1339294999}
   m_Layer: 0
   m_Name: Planet
@@ -83,6 +82,9 @@ MonoBehaviour:
   MineCost: 50
   Farm: 0
   FarmCost: 25
+  FactoryCost: 500
+  school: 0
+  schoolcost: 100
   Owned: 0
   Names:
   - 'Gia '
@@ -94,12 +96,12 @@ MonoBehaviour:
   - Dirt
   - Vegetable
   - Proxima Centauri
-  - Wolf 359#
-  - Lalande 2118
+  - Wolf #
+  - Lalande
   - Epsilon Eridani
   - Tau Ceti
-  - Gliese 1061
-  - Gliese 784
+  - 'Gliese '
+  - GreenHills
   - CD Ceti
   - AU Microscopii
   - Stav
@@ -309,28 +311,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1028721849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5985066019531933671}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7074bc77da794d3489c716825240fa4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  candidates:
-  - spawnWeight: 50
-    gameObject: {fileID: 4078074841964608161, guid: 1d43ee01168a8ba4aa955bad62e2c432,
-      type: 3}
-  Count: 0
-  SpawnedMax: 0
-  Timer: 3
-  YRange: 0
-  XRange: 0
-  Planet: 1
 --- !u!114 &1339294999
 MonoBehaviour:
   m_ObjectHideFlags: 0

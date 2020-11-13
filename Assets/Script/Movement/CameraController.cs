@@ -5,36 +5,68 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject Player;
-
     public Vector3 Offset;
-    public float zoomSize = 5f;
+    private Player player;
+    private new Camera camera;
+
+    private float zoomSpeed = 0;
+    private float zoomGoal = 5f;
+    private float zoomCurrent = 5f;
+    private const float ZoomAcceleration = 20f;
+
     void Start()
     {
-        gameObject.GetComponent<Camera>().orthographicSize = zoomSize;
+        camera = gameObject.GetComponent<Camera>();
+        player = Player.GetComponent<Player>();
+        camera.orthographicSize = zoomGoal;
         Offset = transform.position - Player.transform.position;
-
-
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate() //after player moves 
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        player.Speed = zoomGoal > 10 ? zoomGoal / 2 : zoomGoal * 2;  
+
+        //if (zoomSize > 10)
+        //{ //base speed on zoom
+        //    player.Speed = zoomSize / 2;
+        //}
+        //else 
+        //{
+        //    player.Speed = zoomSize * 2;
+        //}
+
+        float input = Input.GetAxis("Mouse ScrollWheel") * -2f * zoomGoal;
+        zoomGoal = Mathf.Clamp(zoomGoal + input, 5, 250); // create a range 
+        //setting the zoom to relate to speed 
+
+        //if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        //{
+        //    if (zoomSize > 5)
+        //    {
+        //        zoomSize -= 8;
+        //    }
+        //}
+        //if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        //{
+        //    zoomSize += 8;
+        //}
+
+        if (zoomCurrent != zoomGoal) //smoothing 
         {
-            if (zoomSize > 5)
-            {
-                zoomSize -= 8;
-            }
+            zoomSpeed += ZoomAcceleration * Time.deltaTime;
+            zoomCurrent = Mathf.MoveTowards(zoomCurrent, zoomGoal, zoomSpeed * Time.deltaTime);
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        else
         {
-            zoomSize += 8;
+            zoomSpeed = 0;
         }
-        gameObject.GetComponent<Camera>().orthographicSize = zoomSize;
+        camera.orthographicSize = zoomCurrent;
 
         if (Player != null)
         {
             transform.position = Player.gameObject.transform.position + Offset;
         }
+
     }
 }

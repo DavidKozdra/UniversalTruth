@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
             playsound(0);
             int num = CurrentPlanet.Life / 2; //sell half the life on planet
             CurrentPlanet.Life /= 2; //set to half
-            Player.Currency += (num +CurrentPlanet.school )/3; // each life is worth 1/3
+            Player.Currency += (num +CurrentPlanet.school*5)/3; // each life is worth 1/3
             PoorText.text = ""; // reset poor text
         }
         else
@@ -72,11 +72,12 @@ public class UIManager : MonoBehaviour
 
     public void BuySchool() 
     {
-        if (((CurrentPlanet.FarmCost)) >= 625) 
+        if (CurrentPlanet.Farm >= 3) 
         {
             if (Player.Currency >= CurrentPlanet.schoolcost)
             {
                 playsound(0);
+                CurrentPlanet.school++;
                 Player.Currency -= CurrentPlanet.schoolcost;
                 CurrentPlanet.schoolcost *= 4;
                 PoorText.text = ""; // reset poor text
@@ -90,7 +91,7 @@ public class UIManager : MonoBehaviour
         else
         {
             playsound(1);
-            PoorText.text = "Need " +(3) + " Farms"; //current amount of each item
+            PoorText.text = "Need " +(CurrentPlanet.Farm-3) + " Farms"; //current amount of each item
         }
     }
 
@@ -114,7 +115,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void BuyMine() {
-        if (Player.Currency > CurrentPlanet.MineCost) {
+        if (Player.Currency >= CurrentPlanet.MineCost) {
 
             playsound(0);
             Player.Currency -= CurrentPlanet.MineCost;
@@ -122,6 +123,21 @@ public class UIManager : MonoBehaviour
             CurrentPlanet.Reasource -= 100;
             CurrentPlanet.MineCost *= 5;
         } else {
+            playsound(1);
+            PoorText.text = "Too Poor";
+        }
+    }
+    public void BetterResources()
+    {
+        if (Player.Currency >= 100)
+        {
+
+            playsound(0);
+            Player.Currency -= 100;
+            CurrentPlanet.GetComponent<ObjectPooler>().Pooledobject.GetComponent<Collectable>().Reasource +=10;
+        }
+        else
+        {
             playsound(1);
             PoorText.text = "Too Poor";
         }
@@ -162,16 +178,16 @@ public class UIManager : MonoBehaviour
     {
         ToolTip = FindObjectOfType<ToolTip>();
         Player = FindObjectOfType<Player>();
-        LifeSlider.maxValue = 2000;
+        LifeSlider.maxValue = 1500;
         ReasourceSlider.maxValue = 1000;
     }
     public void NameChange() {
         if (CurrentPlanet != null && CurrentPlanet.Owned)
         {
             print("Active");
-            changename = true;
-            Player.Paused = true;
-            CurrentPlanet.name = NameText.text;
+            //changename = true;
+            //Player.Paused = true;
+            //CurrentPlanet.name = NameText.text;
         }
      
     }
@@ -187,7 +203,7 @@ public class UIManager : MonoBehaviour
     {
         if (CurrentPlanet != null) {
             MineCostText.text = "Add a Mine" +" - "+ CurrentPlanet.MineCost.ToString();
-            Lifeaddtext.text = "Sell Life" + " +"+ ((CurrentPlanet.Life + CurrentPlanet.school) / 3).ToString();
+            Lifeaddtext.text = "Sell Life" + " +"+ ((CurrentPlanet.Life + CurrentPlanet.school *5) / 3).ToString();
             FarmCostText.text = "Buy Farm" + "- " + CurrentPlanet.FarmCost.ToString();
             FactoryText.text = "Buy Factory" + "- " + CurrentPlanet.FactoryCost.ToString();
             schooltext.text = "Buy school" + "- " + CurrentPlanet.schoolcost.ToString();
@@ -216,7 +232,7 @@ public class UIManager : MonoBehaviour
                 //button on
                 PlanetShopDisplay.SetActive(false);
                 BuyButton.SetActive(true);
-                NameText.text = "Purchase " + CurrentPlanet.name +" \n  "+ CurrentPlanet.Cost.ToString();
+                NameText.text = "Purchase " + CurrentPlanet.name + " \n  	₱" + CurrentPlanet.Cost.ToString();
             }
         }
         else {
@@ -229,9 +245,10 @@ public class UIManager : MonoBehaviour
             NameText.interactable = false;
         }
         else {
-            NameText.interactable = true;
+           // NameText.interactable = true;
         }
-            if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            //turn map off
             CurrentPlanet = null;
         }
     }
