@@ -1,5 +1,10 @@
 
 
+
+https://user-images.githubusercontent.com/45106564/125345951-2641ac80-e327-11eb-83f7-d25d39100cbf.mp4
+
+
+
 # Introduction to Universal Truth
 Click planets to buy them, then start collecting, and try to not destroy everything. 2D unity incremental space game.
 
